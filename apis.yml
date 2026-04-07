@@ -1,7 +1,12 @@
 aid: regions-financial
-url: https://raw.githubusercontent.com/api-evangelist/regions-financial/refs/heads/main/apis.yml
+url: 
+  https://raw.githubusercontent.com/api-evangelist/regions-financial/refs/heads/main/apis.yml
 modified: '2026-03-21'
 apis: []
 common:
   - type: Website
     url: https://www.regions-financial.com
+description: >-
+  Regions Financial is a member of the S&P 500 Index and one of the nation's largest
+  full-service providers of consumer and commercial banking, wealth management, and
+  mortgage products and services.
