@@ -1,0 +1,227 @@
+naftiko: "1.0.0-alpha1"
+
+info:
+  label: "Regions Open Banking"
+  description: >-
+    Workflow capability for Regions Bank's open banking platform enabling
+    fintech applications, financial management tools, and data aggregators
+    to securely access customer account data, transaction history, and
+    payment initiation with customer consent under FDX standards and
+    CFPB open banking compliance.
+  tags:
+    - Banking
+    - Open Banking
+    - FDX
+    - Account Aggregation
+    - Personal Finance
+    - Payments
+    - Consumer Banking
+  created: "2026-05-02"
+  modified: "2026-05-02"
+
+binds:
+  - namespace: env
+    keys:
+      REGIONS_ACCESS_TOKEN: REGIONS_ACCESS_TOKEN
+
+capability:
+  consumes:
+    - import: regions-open-banking
+      location: ./shared/regions-open-banking.yaml
+
+  exposes:
+    - type: rest
+      port: 8080
+      namespace: regions-open-banking-api
+      description: "Unified REST API for Regions open banking account data, transactions, and payments."
+      resources:
+        - path: /v1/accounts
+          name: accounts
+          description: Customer account listing and details
+          operations:
+            - method: GET
+              name: list-accounts
+              description: List all accounts for the authenticated customer
+              call: "regions-open-banking.list-accounts"
+              with:
+                accountType: "rest.accountType"
+                status: "rest.status"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/accounts/{accountId}
+          name: account-detail
+          description: Individual account details
+          operations:
+            - method: GET
+              name: get-account
+              description: Get balance and details for a specific account
+              call: "regions-open-banking.get-account"
+              with:
+                accountId: "rest.accountId"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/accounts/{accountId}/transactions
+          name: transactions
+          description: Account transaction history
+          operations:
+            - method: GET
+              name: list-transactions
+              description: Retrieve transaction history for an account
+              call: "regions-open-banking.list-transactions"
+              with:
+                accountId: "rest.accountId"
+                startDate: "rest.startDate"
+                endDate: "rest.endDate"
+                limit: "rest.limit"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/customers/current
+          name: customer
+          description: Authenticated customer profile
+          operations:
+            - method: GET
+              name: get-current-customer
+              description: Get the authenticated customer's profile
+              call: "regions-open-banking.get-current-customer"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/payments
+          name: payments
+          description: Payment initiation
+          operations:
+            - method: POST
+              name: initiate-payment
+              description: Initiate a payment or internal transfer
+              call: "regions-open-banking.initiate-payment"
+              with:
+                sourceAccountId: "rest.sourceAccountId"
+                destinationAccountId: "rest.destinationAccountId"
+                amount: "rest.amount"
+                paymentType: "rest.paymentType"
+                memo: "rest.memo"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/payments/{paymentId}
+          name: payment-detail
+          description: Payment status
+          operations:
+            - method: GET
+              name: get-payment
+              description: Get status for a specific payment
+              call: "regions-open-banking.get-payment"
+              with:
+                paymentId: "rest.paymentId"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/consents
+          name: consents
+          description: Consent management
+          operations:
+            - method: GET
+              name: list-consents
+              description: List active data sharing consents
+              call: "regions-open-banking.list-consents"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+
+    - type: mcp
+      port: 9090
+      namespace: regions-open-banking-mcp
+      transport: http
+      description: "MCP server for AI-assisted financial data aggregation and account management."
+      tools:
+        - name: list-accounts
+          description: List all bank accounts including checking, savings, credit cards, and loans for the customer
+          hints:
+            readOnly: true
+            openWorld: false
+          call: "regions-open-banking.list-accounts"
+          with:
+            accountType: "tools.accountType"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: get-account
+          description: Get balance and full details for a specific Regions account
+          hints:
+            readOnly: true
+          call: "regions-open-banking.get-account"
+          with:
+            accountId: "tools.accountId"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: list-transactions
+          description: Retrieve transaction history for an account with optional date filtering
+          hints:
+            readOnly: true
+          call: "regions-open-banking.list-transactions"
+          with:
+            accountId: "tools.accountId"
+            startDate: "tools.startDate"
+            endDate: "tools.endDate"
+            limit: "tools.limit"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: get-current-customer
+          description: Get the authenticated customer's profile including name and contact information
+          hints:
+            readOnly: true
+          call: "regions-open-banking.get-current-customer"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: initiate-payment
+          description: Initiate an ACH payment, wire transfer, or internal account transfer
+          hints:
+            readOnly: false
+            destructive: false
+            idempotent: false
+          call: "regions-open-banking.initiate-payment"
+          with:
+            sourceAccountId: "tools.sourceAccountId"
+            destinationAccountId: "tools.destinationAccountId"
+            amount: "tools.amount"
+            paymentType: "tools.paymentType"
+            memo: "tools.memo"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: get-payment
+          description: Check the status of a previously initiated payment
+          hints:
+            readOnly: true
+          call: "regions-open-banking.get-payment"
+          with:
+            paymentId: "tools.paymentId"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: list-consents
+          description: List active data sharing consents the customer has granted to third parties
+          hints:
+            readOnly: true
+          call: "regions-open-banking.list-consents"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: revoke-consent
+          description: Revoke a specific data sharing consent previously granted to a third party
+          hints:
+            readOnly: false
+            destructive: true
+            idempotent: true
+          call: "regions-open-banking.revoke-consent"
+          with:
+            consentId: "tools.consentId"
+          outputParameters:
+            - type: object
+              mapping: "$."

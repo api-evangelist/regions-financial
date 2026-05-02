@@ -1,0 +1,157 @@
+vocabulary:
+  name: Regions Financial Vocabulary
+  description: >-
+    Domain vocabulary for Regions Financial Corporation and its open banking
+    implementation. Covers consumer and commercial banking concepts, FDX API
+    standards, consent management, and Regions-specific financial products and
+    services including the Axway Amplify Open Banking partnership.
+  version: 1.0.0
+  created: '2026-05-02'
+  modified: '2026-05-02'
+  source: https://www.regions.com
+
+terms:
+  - term: Financial Data Exchange (FDX)
+    definition: >-
+      A nonprofit organization that defines and promotes the adoption of its
+      common, interoperable, and royalty-free FDX API for financial data
+      sharing between financial institutions and authorized third parties.
+      Regions joined FDX in 2021 and is building its open banking implementation
+      to FDX API v6.x standards.
+    tags:
+      - Standard
+      - Open Banking
+
+  - term: Open Banking
+    definition: >-
+      A financial services framework that allows bank customers to grant
+      authorized third-party applications secure access to their financial
+      data via APIs with customer consent, replacing legacy screen-scraping.
+      Regions Bank is implementing open banking capabilities through Axway's
+      Amplify Open Banking solution targeting CFPB compliance by April 2027.
+    tags:
+      - Core Concept
+      - Regulatory
+
+  - term: Axway Amplify Open Banking
+    definition: >-
+      The API management and open banking platform selected by Regions Bank
+      to deliver its open banking capabilities. Amplify Open Banking provides
+      FDX-compliant API infrastructure, consent management, and a developer
+      marketplace for API planning and adoption.
+    tags:
+      - Technology Partner
+      - Platform
+
+  - term: Consumer Financial Protection Bureau (CFPB)
+    definition: >-
+      The US federal regulatory agency whose open banking rule (Section 1033
+      of the Dodd-Frank Act) requires financial institutions to provide
+      customers with access to their financial data via APIs. Regions Bank's
+      required adoption date is April 1, 2027.
+    tags:
+      - Regulatory
+      - Compliance
+
+  - term: Account Aggregation
+    definition: >-
+      The process of collecting and consolidating financial account data from
+      multiple accounts (checking, savings, credit cards, investments) into
+      a unified view, typically via open banking APIs, enabling personal
+      financial management applications.
+    tags:
+      - Use Case
+      - Data
+
+  - term: Consent
+    definition: >-
+      Explicit customer authorization granting a specific third party access
+      to defined categories of financial data for a defined period. Under FDX
+      and CFPB rules, consent must be granular, revocable, and transparent.
+    tags:
+      - Core Concept
+      - Privacy
+
+  - term: Screen Scraping
+    definition: >-
+      The legacy method of third-party financial data access where applications
+      collect customer credentials and log in as the customer to extract data.
+      Open banking APIs are designed to replace screen scraping with secure,
+      token-based consent flows.
+    tags:
+      - Legacy
+      - Technology
+
+  - term: OAuth 2.0
+    definition: >-
+      The authorization framework used by FDX-compliant open banking APIs.
+      Customers authorize third-party apps via an OAuth authorization code
+      flow, granting scoped access tokens without sharing their banking
+      credentials with third parties.
+    tags:
+      - Authentication
+      - Standard
+
+  - term: Checking Account
+    definition: >-
+      A demand deposit account used for everyday transactions including direct
+      deposits, debit card purchases, check writing, and bill payments.
+      Regions offers multiple checking account tiers including LifeGreen
+      Checking and Simple Checking.
+    tags:
+      - Product
+      - Deposit Account
+
+  - term: Savings Account
+    definition: >-
+      An interest-bearing deposit account designed for accumulating funds.
+      Regions offers LifeGreen Savings and other savings products with
+      linked benefits for customers who also hold Regions checking accounts.
+    tags:
+      - Product
+      - Deposit Account
+
+  - term: ACH (Automated Clearing House)
+    definition: >-
+      The US electronic payment network for processing direct deposits, payroll,
+      and consumer bill payments. ACH is one of the payment types supported in
+      Regions' open banking payment initiation API.
+    tags:
+      - Payment Method
+      - Infrastructure
+
+  - term: Wire Transfer
+    definition: >-
+      An electronic funds transfer processed through bank-to-bank networks
+      (Fedwire or SWIFT) for same-day settlement of large-value payments.
+      Supported as a payment type in Regions' open banking payment API.
+    tags:
+      - Payment Method
+
+  - term: Merchant Category Code (MCC)
+    definition: >-
+      A four-digit code assigned by payment card networks to categorize the
+      type of business at which a card transaction occurred. Included in
+      transaction data to support spending categorization in financial apps.
+    tags:
+      - Transaction Data
+      - Classification
+
+  - term: LifeGreen
+    definition: >-
+      Regions Bank's flagship consumer brand for checking and savings accounts,
+      emphasizing financial wellness features including automatic savings
+      programs, overdraft protection, and budgeting tools.
+    tags:
+      - Product Brand
+      - Consumer Banking
+
+  - term: Treasury Management
+    definition: >-
+      Commercial banking services for business cash flow management including
+      payroll processing, receivables management, payables management, and
+      embedded banking integrations with ERP systems. Regions offers treasury
+      management APIs for commercial customers.
+    tags:
+      - Commercial Banking
+      - Product

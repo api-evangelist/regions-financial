@@ -1,0 +1,65 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "https://api.regions.com/v1/accounts/acct-chk-001/transactions?startDate=2026-04-25&endDate=2026-05-02&limit=3",
+    "headers": {
+      "Authorization": "Bearer {access_token}",
+      "Accept": "application/json"
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "transactions": [
+        {
+          "transactionId": "txn-20260502-001",
+          "accountId": "acct-chk-001",
+          "postedDate": "2026-05-02",
+          "transactionDate": "2026-05-01",
+          "amount": -45.23,
+          "currency": "USD",
+          "description": "WHOLEFDS MAR 99999",
+          "category": "Groceries",
+          "type": "DEBIT",
+          "status": "POSTED",
+          "merchantName": "Whole Foods Market",
+          "merchantCategory": "5411"
+        },
+        {
+          "transactionId": "txn-20260501-002",
+          "accountId": "acct-chk-001",
+          "postedDate": "2026-05-01",
+          "transactionDate": "2026-04-30",
+          "amount": 3200.00,
+          "currency": "USD",
+          "description": "DIRECT DEPOSIT EMPLOYER",
+          "category": "Income",
+          "type": "CREDIT",
+          "status": "POSTED",
+          "merchantName": null,
+          "merchantCategory": null
+        },
+        {
+          "transactionId": "txn-20260429-003",
+          "accountId": "acct-chk-001",
+          "postedDate": "2026-04-29",
+          "transactionDate": "2026-04-29",
+          "amount": -125.00,
+          "currency": "USD",
+          "description": "REGIONS MORTGAGE PAYMENT",
+          "category": "Housing",
+          "type": "DEBIT",
+          "status": "POSTED",
+          "merchantName": "Regions Bank",
+          "merchantCategory": "6159"
+        }
+      ],
+      "page": {
+        "total": 47,
+        "limit": 3,
+        "offset": 0,
+        "hasMore": true
+      }
+    }
+  }
+}

@@ -1,0 +1,53 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "https://api.regions.com/v1/accounts",
+    "headers": {
+      "Authorization": "Bearer {access_token}",
+      "Accept": "application/json"
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "accounts": [
+        {
+          "accountId": "acct-chk-001",
+          "accountType": "CHECKING",
+          "accountNumber": "****4521",
+          "nickname": "Primary Checking",
+          "status": "OPEN",
+          "currency": "USD",
+          "balance": {
+            "available": 2847.53,
+            "current": 2847.53,
+            "currency": "USD",
+            "asOf": "2026-05-02T12:00:00Z"
+          },
+          "institution": "Regions Bank"
+        },
+        {
+          "accountId": "acct-sav-002",
+          "accountType": "SAVINGS",
+          "accountNumber": "****8834",
+          "nickname": "Emergency Fund",
+          "status": "OPEN",
+          "currency": "USD",
+          "balance": {
+            "available": 12500.00,
+            "current": 12500.00,
+            "currency": "USD",
+            "asOf": "2026-05-02T12:00:00Z"
+          },
+          "institution": "Regions Bank"
+        }
+      ],
+      "page": {
+        "total": 2,
+        "limit": 50,
+        "offset": 0,
+        "hasMore": false
+      }
+    }
+  }
+}

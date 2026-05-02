@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://api-evangelist.github.io/regions-financial/json-schema/regions-account-schema.json",
+  "title": "Account",
+  "description": "A Regions Bank customer account (FDX-compliant)",
+  "type": "object",
+  "required": ["accountId", "accountType", "status"],
+  "properties": {
+    "accountId": {
+      "type": "string",
+      "description": "Unique account identifier"
+    },
+    "accountType": {
+      "type": "string",
+      "enum": ["CHECKING", "SAVINGS", "CREDIT_CARD", "LOAN", "INVESTMENT", "MORTGAGE"],
+      "description": "FDX account type classification"
+    },
+    "accountNumber": {
+      "type": "string",
+      "description": "Masked account number (last 4 digits visible)"
+    },
+    "nickname": {
+      "type": "string",
+      "description": "Customer-assigned account nickname"
+    },
+    "status": {
+      "type": "string",
+      "enum": ["OPEN", "CLOSED"],
+      "description": "Account status"
+    },
+    "currency": {
+      "type": "string",
+      "default": "USD",
+      "description": "Account currency code (ISO 4217)"
+    },
+    "balance": {
+      "type": "object",
+      "properties": {
+        "available": { "type": "number", "description": "Available balance" },
+        "current": { "type": "number", "description": "Current ledger balance" },
+        "limit": { "type": "number", "description": "Credit limit for credit accounts" },
+        "currency": { "type": "string", "default": "USD" },
+        "asOf": { "type": "string", "format": "date-time" }
+      }
+    },
+    "institution": {
+      "type": "string",
+      "description": "Institution name (Regions Bank)"
+    }
+  },
+  "additionalProperties": false
+}

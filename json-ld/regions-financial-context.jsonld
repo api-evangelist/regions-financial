@@ -1,0 +1,48 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "schema": "https://schema.org/",
+    "fibo": "https://spec.edmcouncil.org/fibo/ontology/",
+    "rgn": "https://api-evangelist.github.io/regions-financial/vocab#",
+    "id": "@id",
+    "type": "@type",
+    "BankAccount": "schema:BankAccount",
+    "accountId": "schema:identifier",
+    "accountType": "rgn:accountType",
+    "accountNumber": "schema:accountId",
+    "nickname": "schema:name",
+    "status": "schema:status",
+    "currency": "schema:currency",
+    "BankOrCreditUnion": "schema:BankOrCreditUnion",
+    "FinancialTransaction": {
+      "@id": "rgn:FinancialTransaction",
+      "@type": "schema:TransferAction"
+    },
+    "transactionId": "schema:identifier",
+    "transactionDate": "schema:startTime",
+    "postedDate": "schema:endTime",
+    "amount": "schema:price",
+    "description": "schema:description",
+    "merchantName": "schema:agent",
+    "merchantCategory": "rgn:merchantCategoryCode",
+    "Person": "schema:Person",
+    "customerId": "schema:identifier",
+    "name": "schema:name",
+    "email": "schema:email",
+    "phone": "schema:telephone",
+    "address": "schema:address",
+    "Payment": "schema:PayAction",
+    "paymentId": "schema:identifier",
+    "paymentType": "rgn:paymentType",
+    "paymentStatus": "schema:actionStatus",
+    "Consent": {
+      "@id": "rgn:DataSharingConsent",
+      "@type": "schema:AgreeAction"
+    },
+    "consentId": "schema:identifier",
+    "thirdPartyName": "schema:participant",
+    "scopes": "rgn:dataScopes",
+    "grantedAt": "schema:startTime",
+    "expiresAt": "schema:expires"
+  }
+}

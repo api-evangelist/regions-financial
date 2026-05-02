@@ -1,0 +1,79 @@
+extends: spectral:oas
+rules:
+  regions-operation-ids-camel-case:
+    description: Operation IDs must use camelCase
+    message: "{{property}} must be camelCase"
+    severity: warn
+    given: "$.paths[*][*].operationId"
+    then:
+      function: pattern
+      functionOptions:
+        match: "^[a-z][a-zA-Z0-9]*$"
+
+  regions-tags-title-case:
+    description: All tags must use Title Case
+    message: "Tag '{{value}}' must use Title Case"
+    severity: warn
+    given: "$.tags[*].name"
+    then:
+      function: pattern
+      functionOptions:
+        match: "^[A-Z][a-zA-Z0-9 &]*$"
+
+  regions-v1-prefix:
+    description: All paths must be prefixed with /v1/
+    message: "Path '{{property}}' must be prefixed with /v1/"
+    severity: warn
+    given: "$.paths"
+    then:
+      function: pattern
+      functionOptions:
+        match: "^/v1/"
+
+  regions-oauth2-required:
+    description: API must define OAuth2 security scheme
+    message: "Regions Open Banking API must define an OAuth2 securityScheme"
+    severity: error
+    given: "$.components.securitySchemes"
+    then:
+      function: schema
+      functionOptions:
+        schema:
+          type: object
+          required: ["OAuth2"]
+
+  regions-fdx-account-types:
+    description: Account type enum must include standard FDX types
+    message: "accountType enum should include FDX-standard values"
+    severity: warn
+    given: "$.components.schemas.Account.properties.accountType.enum"
+    then:
+      function: truthy
+
+  regions-operations-have-summaries:
+    description: All operations must have a summary
+    message: "Operation '{{property}}' is missing a summary"
+    severity: error
+    given: "$.paths[*][*]"
+    then:
+      field: summary
+      function: truthy
+
+  regions-paths-kebab-case:
+    description: Path segments must use kebab-case
+    message: "Path '{{property}}' should use kebab-case segments"
+    severity: warn
+    given: "$.paths"
+    then:
+      function: pattern
+      functionOptions:
+        match: "^(/[a-z][a-z0-9-]*(/(\\{[a-zA-Z]+\\}|[a-z][a-z0-9-]*))*)*$"
+
+  regions-pagination-on-collections:
+    description: Collection endpoints should include pagination info in response
+    message: "List operation should return pagination metadata"
+    severity: warn
+    given: "$.paths[*].get.responses.200.content['application/json'].schema.properties"
+    then:
+      field: page
+      function: truthy

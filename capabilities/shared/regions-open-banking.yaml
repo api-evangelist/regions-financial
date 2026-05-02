@@ -1,0 +1,253 @@
+naftiko: "1.0.0-alpha1"
+
+info:
+  label: "Regions Open Banking API"
+  description: >-
+    Shared capability definition for Regions Bank's FDX-compliant open banking
+    API providing account information, transactions, customer data, payments,
+    and consent management for consumer and commercial banking customers.
+  tags:
+    - Open Banking
+    - Banking
+    - FDX
+    - Account Information
+    - Transactions
+    - Payments
+    - Consent
+  created: "2026-05-02"
+  modified: "2026-05-02"
+
+binds:
+  - namespace: env
+    keys:
+      REGIONS_ACCESS_TOKEN: REGIONS_ACCESS_TOKEN
+
+capability:
+  consumes:
+    - type: http
+      namespace: regions-open-banking
+      baseUri: https://api.regions.com/v1
+      description: Regions Bank FDX-compliant open banking API
+      authentication:
+        type: bearer
+        token: "{{REGIONS_ACCESS_TOKEN}}"
+      resources:
+        - name: accounts
+          path: /accounts
+          description: Customer account information
+          operations:
+            - name: list-accounts
+              method: GET
+              description: List all accounts for the authenticated customer
+              inputParameters:
+                - name: accountType
+                  in: query
+                  type: string
+                  required: false
+                  description: Filter by account type
+                - name: status
+                  in: query
+                  type: string
+                  required: false
+                  description: Filter by account status
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+            - name: get-account
+              method: GET
+              description: Get details for a specific account
+              inputParameters:
+                - name: accountId
+                  in: path
+                  type: string
+                  required: true
+                  description: Unique account identifier
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+        - name: transactions
+          path: /accounts/{accountId}/transactions
+          description: Account transaction history
+          operations:
+            - name: list-transactions
+              method: GET
+              description: List transactions for a specific account
+              inputParameters:
+                - name: accountId
+                  in: path
+                  type: string
+                  required: true
+                  description: Account identifier
+                - name: startDate
+                  in: query
+                  type: string
+                  required: false
+                  description: Start date filter (YYYY-MM-DD)
+                - name: endDate
+                  in: query
+                  type: string
+                  required: false
+                  description: End date filter (YYYY-MM-DD)
+                - name: limit
+                  in: query
+                  type: integer
+                  required: false
+                  description: Max results to return
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+        - name: customers
+          path: /customers
+          description: Customer profile data
+          operations:
+            - name: get-current-customer
+              method: GET
+              description: Get the authenticated customer's profile
+              inputParameters: []
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+        - name: payments
+          path: /payments
+          description: Payment initiation and status
+          operations:
+            - name: initiate-payment
+              method: POST
+              description: Initiate a payment or transfer
+              inputParameters: []
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+              body:
+                type: json
+                data:
+                  sourceAccountId: "{{tools.sourceAccountId}}"
+                  destinationAccountId: "{{tools.destinationAccountId}}"
+                  amount: "{{tools.amount}}"
+                  currency: "{{tools.currency}}"
+                  paymentType: "{{tools.paymentType}}"
+                  memo: "{{tools.memo}}"
+            - name: get-payment
+              method: GET
+              description: Get status for a specific payment
+              inputParameters:
+                - name: paymentId
+                  in: path
+                  type: string
+                  required: true
+                  description: Payment identifier
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+        - name: consents
+          path: /consents
+          description: Consent management for data sharing
+          operations:
+            - name: list-consents
+              method: GET
+              description: List active data sharing consents
+              inputParameters: []
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+            - name: revoke-consent
+              method: DELETE
+              description: Revoke a specific consent
+              inputParameters:
+                - name: consentId
+                  in: path
+                  type: string
+                  required: true
+                  description: Consent identifier to revoke
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+
+  exposes:
+    - type: rest
+      port: 8100
+      namespace: regions-open-banking-api
+      resources:
+        - path: /v1/accounts
+          name: accounts
+          description: Account information
+          operations:
+            - method: GET
+              name: list-accounts
+              description: List customer accounts
+              call: "regions-open-banking.list-accounts"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/accounts/{accountId}/transactions
+          name: transactions
+          description: Transaction history
+          operations:
+            - method: GET
+              name: list-transactions
+              description: List account transactions
+              call: "regions-open-banking.list-transactions"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+
+    - type: mcp
+      port: 9100
+      namespace: regions-open-banking-mcp
+      transport: http
+      tools:
+        - name: list-accounts
+          description: List all accounts for the authenticated Regions customer
+          hints:
+            readOnly: true
+            openWorld: false
+          call: "regions-open-banking.list-accounts"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: get-account
+          description: Get balance and details for a specific account
+          hints:
+            readOnly: true
+          call: "regions-open-banking.get-account"
+          with:
+            accountId: "tools.accountId"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: list-transactions
+          description: Get transaction history for an account
+          hints:
+            readOnly: true
+          call: "regions-open-banking.list-transactions"
+          with:
+            accountId: "tools.accountId"
+            startDate: "tools.startDate"
+            endDate: "tools.endDate"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: get-current-customer
+          description: Get the authenticated customer's profile
+          hints:
+            readOnly: true
+          call: "regions-open-banking.get-current-customer"
+          outputParameters:
+            - type: object
+              mapping: "$."

@@ -1,0 +1,18 @@
+{
+  "title": "Transaction Structure",
+  "description": "JSON structure documentation for the Regions Bank Transaction entity (FDX-compliant)",
+  "fields": [
+    { "name": "transactionId", "type": "string", "required": true, "description": "Unique transaction identifier" },
+    { "name": "accountId", "type": "string", "required": true, "description": "Associated account ID" },
+    { "name": "postedDate", "type": "date", "required": false, "description": "Date posted to account" },
+    { "name": "transactionDate", "type": "date", "required": false, "description": "Date transaction occurred" },
+    { "name": "amount", "type": "number", "required": true, "description": "Amount (negative for debits)" },
+    { "name": "currency", "type": "string", "required": false, "description": "ISO 4217 currency code" },
+    { "name": "description", "type": "string", "required": false, "description": "Transaction description" },
+    { "name": "category", "type": "string", "required": false, "description": "Spending category" },
+    { "name": "type", "type": "string", "required": true, "description": "DEBIT or CREDIT" },
+    { "name": "status", "type": "string", "required": true, "description": "PENDING or POSTED" },
+    { "name": "merchantName", "type": "string", "required": false, "description": "Merchant name" },
+    { "name": "merchantCategory", "type": "string", "required": false, "description": "Merchant category code (MCC)" }
+  ]
+}

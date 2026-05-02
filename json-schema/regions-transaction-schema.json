@@ -1,0 +1,63 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://api-evangelist.github.io/regions-financial/json-schema/regions-transaction-schema.json",
+  "title": "Transaction",
+  "description": "A financial transaction on a Regions Bank account (FDX-compliant)",
+  "type": "object",
+  "required": ["transactionId", "accountId", "amount", "type", "status"],
+  "properties": {
+    "transactionId": {
+      "type": "string",
+      "description": "Unique transaction identifier"
+    },
+    "accountId": {
+      "type": "string",
+      "description": "Account the transaction belongs to"
+    },
+    "postedDate": {
+      "type": "string",
+      "format": "date",
+      "description": "Date transaction was posted"
+    },
+    "transactionDate": {
+      "type": "string",
+      "format": "date",
+      "description": "Date transaction occurred"
+    },
+    "amount": {
+      "type": "number",
+      "description": "Transaction amount (negative for debits)"
+    },
+    "currency": {
+      "type": "string",
+      "default": "USD"
+    },
+    "description": {
+      "type": "string",
+      "description": "Transaction description text"
+    },
+    "category": {
+      "type": "string",
+      "description": "Spending category"
+    },
+    "type": {
+      "type": "string",
+      "enum": ["DEBIT", "CREDIT"],
+      "description": "Transaction direction"
+    },
+    "status": {
+      "type": "string",
+      "enum": ["PENDING", "POSTED"],
+      "description": "Transaction posting status"
+    },
+    "merchantName": {
+      "type": "string",
+      "description": "Merchant name for card transactions"
+    },
+    "merchantCategory": {
+      "type": "string",
+      "description": "Merchant category code (MCC)"
+    }
+  },
+  "additionalProperties": false
+}
