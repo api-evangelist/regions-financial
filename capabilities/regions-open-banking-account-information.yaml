@@ -1,0 +1,117 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Regions Open Banking API — Account Information
+  description: 'Regions Open Banking API — Account Information. 2 operations. Lead operation: List Accounts. Self-contained
+    Naftiko capability covering one Regions Financial business surface.'
+  tags:
+  - Regions Financial
+  - Account Information
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    REGIONS_FINANCIAL_API_KEY: REGIONS_FINANCIAL_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: regions-open-banking-account-information
+    baseUri: https://api.regions.com/v1
+    description: Regions Open Banking API — Account Information business capability. Self-contained, no shared references.
+    resources:
+    - name: accounts
+      path: /accounts
+      operations:
+      - name: listaccounts
+        method: GET
+        description: List Accounts
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: accountType
+          in: query
+          type: string
+          description: Filter by account type
+        - name: status
+          in: query
+          type: string
+          description: Filter by account status
+    - name: accounts-accountId
+      path: /accounts/{accountId}
+      operations:
+      - name: getaccount
+        method: GET
+        description: Get Account
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    authentication:
+      type: bearer
+      token: '{{env.REGIONS_FINANCIAL_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: regions-open-banking-account-information-rest
+    port: 8080
+    description: REST adapter for Regions Open Banking API — Account Information. One Spectral-compliant resource per consumed
+      operation, prefixed with /v1.
+    resources:
+    - path: /v1/accounts
+      name: accounts
+      description: REST surface for accounts.
+      operations:
+      - method: GET
+        name: listaccounts
+        description: List Accounts
+        call: regions-open-banking-account-information.listaccounts
+        with:
+          accountType: rest.accountType
+          status: rest.status
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/accounts/{accountid}
+      name: accounts-accountid
+      description: REST surface for accounts-accountId.
+      operations:
+      - method: GET
+        name: getaccount
+        description: Get Account
+        call: regions-open-banking-account-information.getaccount
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: regions-open-banking-account-information-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Regions Open Banking API — Account Information. One tool per consumed operation, routed inline
+      through this capability's consumes block.
+    tools:
+    - name: list-accounts
+      description: List Accounts
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: regions-open-banking-account-information.listaccounts
+      with:
+        accountType: tools.accountType
+        status: tools.status
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-account
+      description: Get Account
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: regions-open-banking-account-information.getaccount
+      outputParameters:
+      - type: object
+        mapping: $.

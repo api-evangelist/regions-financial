@@ -1,0 +1,111 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Regions Open Banking API — Consent
+  description: 'Regions Open Banking API — Consent. 2 operations. Lead operation: List Consents. Self-contained Naftiko capability
+    covering one Regions Financial business surface.'
+  tags:
+  - Regions Financial
+  - Consent
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    REGIONS_FINANCIAL_API_KEY: REGIONS_FINANCIAL_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: regions-open-banking-consent
+    baseUri: https://api.regions.com/v1
+    description: Regions Open Banking API — Consent business capability. Self-contained, no shared references.
+    resources:
+    - name: consents
+      path: /consents
+      operations:
+      - name: listconsents
+        method: GET
+        description: List Consents
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: consents-consentId
+      path: /consents/{consentId}
+      operations:
+      - name: revokeconsent
+        method: DELETE
+        description: Revoke Consent
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: consentId
+          in: path
+          type: string
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.REGIONS_FINANCIAL_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: regions-open-banking-consent-rest
+    port: 8080
+    description: REST adapter for Regions Open Banking API — Consent. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/consents
+      name: consents
+      description: REST surface for consents.
+      operations:
+      - method: GET
+        name: listconsents
+        description: List Consents
+        call: regions-open-banking-consent.listconsents
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/consents/{consentid}
+      name: consents-consentid
+      description: REST surface for consents-consentId.
+      operations:
+      - method: DELETE
+        name: revokeconsent
+        description: Revoke Consent
+        call: regions-open-banking-consent.revokeconsent
+        with:
+          consentId: rest.consentId
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: regions-open-banking-consent-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Regions Open Banking API — Consent. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: list-consents
+      description: List Consents
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: regions-open-banking-consent.listconsents
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: revoke-consent
+      description: Revoke Consent
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: regions-open-banking-consent.revokeconsent
+      with:
+        consentId: tools.consentId
+      outputParameters:
+      - type: object
+        mapping: $.

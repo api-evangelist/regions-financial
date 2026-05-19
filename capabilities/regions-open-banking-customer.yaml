@@ -1,0 +1,70 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Regions Open Banking API — Customer
+  description: 'Regions Open Banking API — Customer. 1 operations. Lead operation: Get Current Customer. Self-contained Naftiko
+    capability covering one Regions Financial business surface.'
+  tags:
+  - Regions Financial
+  - Customer
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    REGIONS_FINANCIAL_API_KEY: REGIONS_FINANCIAL_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: regions-open-banking-customer
+    baseUri: https://api.regions.com/v1
+    description: Regions Open Banking API — Customer business capability. Self-contained, no shared references.
+    resources:
+    - name: customers-current
+      path: /customers/current
+      operations:
+      - name: getcurrentcustomer
+        method: GET
+        description: Get Current Customer
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    authentication:
+      type: bearer
+      token: '{{env.REGIONS_FINANCIAL_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: regions-open-banking-customer-rest
+    port: 8080
+    description: REST adapter for Regions Open Banking API — Customer. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/customers/current
+      name: customers-current
+      description: REST surface for customers-current.
+      operations:
+      - method: GET
+        name: getcurrentcustomer
+        description: Get Current Customer
+        call: regions-open-banking-customer.getcurrentcustomer
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: regions-open-banking-customer-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Regions Open Banking API — Customer. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: get-current-customer
+      description: Get Current Customer
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: regions-open-banking-customer.getcurrentcustomer
+      outputParameters:
+      - type: object
+        mapping: $.
