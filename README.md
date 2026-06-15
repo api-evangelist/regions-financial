@@ -1,73 +1,55 @@
-# Regions Financial
+# regions-financial (regions-financial)
 
-Regions Financial Corporation is a member of the S&P 500 Index and one of the nation's largest full-service providers of consumer and commercial banking, wealth management, and mortgage products and services. Regions Bank is implementing open banking capabilities through a partnership with Axway Amplify Open Banking, building FDX-compliant APIs enabling secure financial data sharing. Regions joined FDX in 2021 and is targeting full CFPB compliance by April 2027.
+Regions Financial Corporation is a member of the S&P 500 Index and one of the nation's largest full-service providers of consumer and commercial banking, wealth management, and mortgage products and services. Regions Bank is implementing open banking capabilities through a partnership with Axway's Amplify Open Banking solution, building APIs aligned to the Financial Data Exchange (FDX) standard to enable secure financial data sharing with fintech partners and third-party platforms. Regions joined FDX in 2021 and is targeting compliance with CFPB open banking rules by April 2027.
 
-**Website:** [https://www.regions.com](https://www.regions.com)
-**Commercial Banking:** [https://www.regions.com/commercial-banking](https://www.regions.com/commercial-banking)
+**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/regions-financial/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/regions-financial/refs/heads/main/apis.yml)
+
+## Tags
+
+- Banking
+- Financial Services
+- Open Banking
+- FDX
+- Consumer Banking
+- Wealth Management
+- Fortune 500
+
+## Timestamps
+
+- **Modified:** 2026-05-19
 
 ## APIs
 
 ### Regions Open Banking API
 
-FDX-compliant open banking APIs enabling consent-based access to account information, transactions, customer data, payment initiation, and consent management. Built on Axway Amplify Open Banking with OAuth 2.0 authorization.
+Regions Bank's FDX-compliant open banking API built on Axway Amplify Open Banking, providing consent-based access to account information, transaction history, customer data, payment initiation, and consent management for consumer banking, corporate banking, and wealth management customers. Uses OAuth 2.0 authorization with customer consent flows replacing legacy screen-scraping.
 
-- **Press Release:** [Regions Bank Selects Axway to Accelerate Open Banking](https://ir.regions.com/news-events/press-releases/news-details/2025/Enhancing-Customer-Control-of-Financial-Data-Regions-Bank-Selects-Axway-to-Accelerate-Open-Banking-Services/default.aspx)
+- **Human URL:** [https://ir.regions.com/news-events/press-releases/news-details/2025/Enhancing-Customer-Control-of-Financial-Data-Regions-Bank-Selects-Axway-to-Accelerate-Open-Banking-Services/default.aspx](https://ir.regions.com/news-events/press-releases/news-details/2025/Enhancing-Customer-Control-of-Financial-Data-Regions-Bank-Selects-Axway-to-Accelerate-Open-Banking-Services/default.aspx)
+- **Base URL:** `https://api.regions.com/v1`
 
-## OpenAPI Specifications
+#### Tags
 
-| API | File |
-|-----|------|
-| Regions Open Banking API | [openapi/regions-open-banking-openapi.yml](openapi/regions-open-banking-openapi.yml) |
+- Open Banking
+- Financial Data
+- FDX
+- Consumer Banking
+- Wealth Management
+- Account Data
+- Transactions
+- Payments
 
-## JSON Schemas
+#### Properties
 
-| Schema | File |
-|--------|------|
-| Account | [json-schema/regions-account-schema.json](json-schema/regions-account-schema.json) |
-| Transaction | [json-schema/regions-transaction-schema.json](json-schema/regions-transaction-schema.json) |
+- [OpenAPI](https://raw.githubusercontent.com/api-evangelist/regions-financial/refs/heads/main/openapi/regions-open-banking-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
+- [Press Release](https://ir.regions.com/news-events/press-releases/news-details/2025/Enhancing-Customer-Control-of-Financial-Data-Regions-Bank-Selects-Axway-to-Accelerate-Open-Banking-Services/default.aspx)
+- [Postman Collection](collections/regions-open-banking.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
+- [Open Collection](collections/regions-open-banking.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
 
-## JSON Structures
+## Common Properties
 
-| Structure | File |
-|-----------|------|
-| Account | [json-structure/regions-account-structure.json](json-structure/regions-account-structure.json) |
-| Transaction | [json-structure/regions-transaction-structure.json](json-structure/regions-transaction-structure.json) |
-
-## JSON-LD Context
-
-| Context | File |
-|---------|------|
-| Regions Financial | [json-ld/regions-financial-context.jsonld](json-ld/regions-financial-context.jsonld) |
-
-## Examples
-
-| Example | File |
-|---------|------|
-| List Accounts | [examples/regions-list-accounts-example.json](examples/regions-list-accounts-example.json) |
-| List Transactions | [examples/regions-list-transactions-example.json](examples/regions-list-transactions-example.json) |
-
-## Spectral Rules
-
-| Ruleset | File |
-|---------|------|
-| Regions Financial Rules | [rules/regions-financial-rules.yml](rules/regions-financial-rules.yml) |
-
-## Capabilities
-
-### Shared Definitions
-
-| API | File |
-|-----|------|
-| Regions Open Banking | [capabilities/shared/regions-open-banking.yaml](capabilities/shared/regions-open-banking.yaml) |
-
-### Workflow Capabilities
-
-| Workflow | Description | File |
-|----------|-------------|------|
-| Open Banking | Account aggregation, transactions, payments, and consent management | [capabilities/open-banking.yaml](capabilities/open-banking.yaml) |
-
-## Vocabulary
-
-| Vocabulary | File |
-|------------|------|
-| Regions Financial | [vocabulary/regions-financial-vocabulary.yml](vocabulary/regions-financial-vocabulary.yml) |
+- [Website](https://www.regions.com)
+- [Website](https://www.regions.com/personal-banking)
+- [Website](https://www.regions.com/commercial-banking)
+- [LinkedIn](https://www.linkedin.com/company/regions-financial-corporation)
+- [OpenAPI](https://raw.githubusercontent.com/api-evangelist/regions-financial/refs/heads/main/openapi/regions-open-banking-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
+- [Vocabulary](https://raw.githubusercontent.com/api-evangelist/regions-financial/refs/heads/main/vocabulary/regions-financial-vocabulary.yml)
