@@ -36,6 +36,10 @@ apis:
         url: >-
           https://ir.regions.com/news-events/press-releases/news-details/2025/Enhancing-Customer-Control-of-Financial-Data-Regions-Bank-Selects-Axway-to-Accelerate-Open-Banking-Services/default.aspx
 common:
+  - type: Authentication
+    url: authentication/regions-financial-authentication.yml
+  - type: OAuthScopes
+    url: scopes/regions-financial-scopes.yml
   - type: Website
     url: https://www.regions.com
   - type: Website

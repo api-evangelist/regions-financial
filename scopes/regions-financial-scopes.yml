@@ -1,0 +1,36 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/regions-open-banking-openapi.yml
+schemes:
+- name: OAuth2
+  source: openapi/regions-open-banking-openapi.yml
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://auth.regions.com/oauth/authorize
+    tokenUrl: https://auth.regions.com/oauth/token
+  description: OAuth 2.0 with customer consent (FDX standard)
+scopes:
+- scope: accounts:read
+  description: Read account information
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/regions-open-banking-openapi.yml
+- scope: customers:read
+  description: Read customer profile
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/regions-open-banking-openapi.yml
+- scope: payments:write
+  description: Initiate payments
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/regions-open-banking-openapi.yml
+- scope: transactions:read
+  description: Read transaction history
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/regions-open-banking-openapi.yml
