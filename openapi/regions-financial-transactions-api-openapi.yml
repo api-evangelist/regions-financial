@@ -1,0 +1,179 @@
+openapi: 3.0.3
+info:
+  title: Regions Open Banking Account Information Transactions API
+  description: Regions Bank is implementing FDX-compliant open banking APIs through its partnership with Axway Amplify Open Banking. These APIs enable secure, consent-based financial data sharing for consumer banking, corporate banking, and wealth management, replacing legacy screen-scraping with standardized API access. Built to Financial Data Exchange (FDX) API v6.x standards. Regions joined FDX in 2021 and is targeting full compliance with CFPB open banking rules by April 2027.
+  version: 1.0.0
+  contact:
+    name: Regions Bank Developer Support
+    url: https://www.regions.com
+  x-api-id: regions-open-banking-api
+  x-audience: partner
+  x-standard: FDX
+servers:
+- url: https://api.regions.com/v1
+  description: Production
+security:
+- OAuth2:
+  - accounts:read
+tags:
+- name: Transactions
+  description: Account transaction history
+paths:
+  /accounts/{accountId}/transactions:
+    get:
+      operationId: listTransactions
+      summary: List Transactions
+      description: Retrieve transaction history for a specific account.
+      tags:
+      - Transactions
+      parameters:
+      - $ref: '#/components/parameters/AccountId'
+      - name: startDate
+        in: query
+        description: Start date for transaction range (YYYY-MM-DD)
+        required: false
+        schema:
+          type: string
+          format: date
+      - name: endDate
+        in: query
+        description: End date for transaction range (YYYY-MM-DD)
+        required: false
+        schema:
+          type: string
+          format: date
+      - name: limit
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 50
+          maximum: 500
+      - name: offset
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 0
+      responses:
+        '200':
+          description: Transaction list
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  transactions:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Transaction'
+                  page:
+                    $ref: '#/components/schemas/PageInfo'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  responses:
+    Unauthorized:
+      description: Missing or invalid OAuth2 token
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  parameters:
+    AccountId:
+      name: accountId
+      in: path
+      required: true
+      schema:
+        type: string
+      description: Unique account identifier
+  schemas:
+    Transaction:
+      type: object
+      properties:
+        transactionId:
+          type: string
+          description: Unique transaction identifier
+        accountId:
+          type: string
+          description: Account the transaction belongs to
+        postedDate:
+          type: string
+          format: date
+          description: Date transaction was posted
+        transactionDate:
+          type: string
+          format: date
+          description: Date transaction occurred
+        amount:
+          type: number
+          format: float
+          description: Transaction amount (negative for debits)
+        currency:
+          type: string
+          default: USD
+        description:
+          type: string
+          description: Transaction description
+        category:
+          type: string
+          description: Spending category
+        type:
+          type: string
+          enum:
+          - DEBIT
+          - CREDIT
+        status:
+          type: string
+          enum:
+          - PENDING
+          - POSTED
+        merchantName:
+          type: string
+          description: Merchant name for card transactions
+        merchantCategory:
+          type: string
+          description: Merchant category code (MCC)
+    PageInfo:
+      type: object
+      properties:
+        total:
+          type: integer
+        limit:
+          type: integer
+        offset:
+          type: integer
+        hasMore:
+          type: boolean
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+        details:
+          type: string
+        traceId:
+          type: string
+  securitySchemes:
+    OAuth2:
+      type: oauth2
+      description: OAuth 2.0 with customer consent (FDX standard)
+      flows:
+        authorizationCode:
+          authorizationUrl: https://auth.regions.com/oauth/authorize
+          tokenUrl: https://auth.regions.com/oauth/token
+          scopes:
+            accounts:read: Read account information
+            transactions:read: Read transaction history
+            customers:read: Read customer profile
+            payments:write: Initiate payments

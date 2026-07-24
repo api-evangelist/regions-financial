@@ -1,0 +1,189 @@
+openapi: 3.0.3
+info:
+  title: Regions Open Banking Account Information Payments API
+  description: Regions Bank is implementing FDX-compliant open banking APIs through its partnership with Axway Amplify Open Banking. These APIs enable secure, consent-based financial data sharing for consumer banking, corporate banking, and wealth management, replacing legacy screen-scraping with standardized API access. Built to Financial Data Exchange (FDX) API v6.x standards. Regions joined FDX in 2021 and is targeting full compliance with CFPB open banking rules by April 2027.
+  version: 1.0.0
+  contact:
+    name: Regions Bank Developer Support
+    url: https://www.regions.com
+  x-api-id: regions-open-banking-api
+  x-audience: partner
+  x-standard: FDX
+servers:
+- url: https://api.regions.com/v1
+  description: Production
+security:
+- OAuth2:
+  - accounts:read
+tags:
+- name: Payments
+  description: Payment initiation and status
+paths:
+  /payments:
+    post:
+      operationId: initiatePayment
+      summary: Initiate Payment
+      description: Initiate a payment transfer from an authorized account.
+      tags:
+      - Payments
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PaymentRequest'
+      responses:
+        '201':
+          description: Payment initiated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Payment'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '422':
+          description: Insufficient funds or invalid account
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /payments/{paymentId}:
+    get:
+      operationId: getPayment
+      summary: Get Payment
+      description: Retrieve status for a specific payment.
+      tags:
+      - Payments
+      parameters:
+      - name: paymentId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Payment details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Payment'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+components:
+  responses:
+    Unauthorized:
+      description: Missing or invalid OAuth2 token
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: Invalid request parameters
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  schemas:
+    PaymentRequest:
+      type: object
+      required:
+      - sourceAccountId
+      - amount
+      - currency
+      - paymentType
+      properties:
+        sourceAccountId:
+          type: string
+          description: Account to debit
+        destinationAccountId:
+          type: string
+          description: Internal destination account ID (for internal transfers)
+        amount:
+          type: number
+          format: float
+          minimum: 0.01
+        currency:
+          type: string
+          default: USD
+        paymentType:
+          type: string
+          enum:
+          - INTERNAL_TRANSFER
+          - ACH
+          - WIRE
+        memo:
+          type: string
+          description: Payment memo or description
+        scheduledDate:
+          type: string
+          format: date
+          description: Date to schedule payment (defaults to today)
+    Payment:
+      type: object
+      properties:
+        paymentId:
+          type: string
+          description: Unique payment identifier
+        status:
+          type: string
+          enum:
+          - PENDING
+          - PROCESSING
+          - COMPLETED
+          - FAILED
+          - CANCELLED
+        sourceAccountId:
+          type: string
+        amount:
+          type: number
+          format: float
+        currency:
+          type: string
+          default: USD
+        paymentType:
+          type: string
+        scheduledDate:
+          type: string
+          format: date
+        completedDate:
+          type: string
+          format: date-time
+        memo:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+        details:
+          type: string
+        traceId:
+          type: string
+  securitySchemes:
+    OAuth2:
+      type: oauth2
+      description: OAuth 2.0 with customer consent (FDX standard)
+      flows:
+        authorizationCode:
+          authorizationUrl: https://auth.regions.com/oauth/authorize
+          tokenUrl: https://auth.regions.com/oauth/token
+          scopes:
+            accounts:read: Read account information
+            transactions:read: Read transaction history
+            customers:read: Read customer profile
+            payments:write: Initiate payments

@@ -1,0 +1,118 @@
+openapi: 3.0.3
+info:
+  title: Regions Open Banking Account Information Customer API
+  description: Regions Bank is implementing FDX-compliant open banking APIs through its partnership with Axway Amplify Open Banking. These APIs enable secure, consent-based financial data sharing for consumer banking, corporate banking, and wealth management, replacing legacy screen-scraping with standardized API access. Built to Financial Data Exchange (FDX) API v6.x standards. Regions joined FDX in 2021 and is targeting full compliance with CFPB open banking rules by April 2027.
+  version: 1.0.0
+  contact:
+    name: Regions Bank Developer Support
+    url: https://www.regions.com
+  x-api-id: regions-open-banking-api
+  x-audience: partner
+  x-standard: FDX
+servers:
+- url: https://api.regions.com/v1
+  description: Production
+security:
+- OAuth2:
+  - accounts:read
+tags:
+- name: Customer
+  description: Customer profile and identity
+paths:
+  /customers/current:
+    get:
+      operationId: getCurrentCustomer
+      summary: Get Current Customer
+      description: Retrieve the profile of the currently authenticated customer.
+      tags:
+      - Customer
+      responses:
+        '200':
+          description: Customer profile
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Customer'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+components:
+  schemas:
+    Address:
+      type: object
+      properties:
+        line1:
+          type: string
+        line2:
+          type: string
+        city:
+          type: string
+        state:
+          type: string
+        postalCode:
+          type: string
+        country:
+          type: string
+          default: US
+    Customer:
+      type: object
+      properties:
+        customerId:
+          type: string
+          description: Unique customer identifier
+        name:
+          $ref: '#/components/schemas/Name'
+        email:
+          type: string
+          format: email
+        phone:
+          type: string
+        address:
+          $ref: '#/components/schemas/Address'
+        dateOfBirth:
+          type: string
+          format: date
+          description: Customer date of birth (masked for privacy)
+    Name:
+      type: object
+      properties:
+        first:
+          type: string
+        middle:
+          type: string
+        last:
+          type: string
+        prefix:
+          type: string
+        suffix:
+          type: string
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+        details:
+          type: string
+        traceId:
+          type: string
+  responses:
+    Unauthorized:
+      description: Missing or invalid OAuth2 token
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  securitySchemes:
+    OAuth2:
+      type: oauth2
+      description: OAuth 2.0 with customer consent (FDX standard)
+      flows:
+        authorizationCode:
+          authorizationUrl: https://auth.regions.com/oauth/authorize
+          tokenUrl: https://auth.regions.com/oauth/token
+          scopes:
+            accounts:read: Read account information
+            transactions:read: Read transaction history
+            customers:read: Read customer profile
+            payments:write: Initiate payments

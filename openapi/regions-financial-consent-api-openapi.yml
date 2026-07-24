@@ -1,0 +1,127 @@
+openapi: 3.0.3
+info:
+  title: Regions Open Banking Account Information Consent API
+  description: Regions Bank is implementing FDX-compliant open banking APIs through its partnership with Axway Amplify Open Banking. These APIs enable secure, consent-based financial data sharing for consumer banking, corporate banking, and wealth management, replacing legacy screen-scraping with standardized API access. Built to Financial Data Exchange (FDX) API v6.x standards. Regions joined FDX in 2021 and is targeting full compliance with CFPB open banking rules by April 2027.
+  version: 1.0.0
+  contact:
+    name: Regions Bank Developer Support
+    url: https://www.regions.com
+  x-api-id: regions-open-banking-api
+  x-audience: partner
+  x-standard: FDX
+servers:
+- url: https://api.regions.com/v1
+  description: Production
+security:
+- OAuth2:
+  - accounts:read
+tags:
+- name: Consent
+  description: Customer consent management for data sharing
+paths:
+  /consents:
+    get:
+      operationId: listConsents
+      summary: List Consents
+      description: List active data sharing consents granted by the customer.
+      tags:
+      - Consent
+      responses:
+        '200':
+          description: List of active consents
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  consents:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Consent'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /consents/{consentId}:
+    delete:
+      operationId: revokeConsent
+      summary: Revoke Consent
+      description: Revoke a specific data sharing consent.
+      tags:
+      - Consent
+      parameters:
+      - name: consentId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: Consent revoked successfully
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+components:
+  responses:
+    Unauthorized:
+      description: Missing or invalid OAuth2 token
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  schemas:
+    Consent:
+      type: object
+      properties:
+        consentId:
+          type: string
+          description: Unique consent identifier
+        thirdPartyName:
+          type: string
+          description: Name of the authorized third party
+        scopes:
+          type: array
+          items:
+            type: string
+          description: Authorized data scopes
+        grantedAt:
+          type: string
+          format: date-time
+        expiresAt:
+          type: string
+          format: date-time
+        status:
+          type: string
+          enum:
+          - ACTIVE
+          - EXPIRED
+          - REVOKED
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+        details:
+          type: string
+        traceId:
+          type: string
+  securitySchemes:
+    OAuth2:
+      type: oauth2
+      description: OAuth 2.0 with customer consent (FDX standard)
+      flows:
+        authorizationCode:
+          authorizationUrl: https://auth.regions.com/oauth/authorize
+          tokenUrl: https://auth.regions.com/oauth/token
+          scopes:
+            accounts:read: Read account information
+            transactions:read: Read transaction history
+            customers:read: Read customer profile
+            payments:write: Initiate payments
