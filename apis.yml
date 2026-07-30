@@ -1,4 +1,18 @@
 aid: regions-financial
+accessModel:
+  pricing: enterprise
+  onboarding: self-serve
+  trial: false
+  try_now: false
+  public: false
+  label: Enterprise · Self-serve signup
+  confidence: high
+  source:
+  - plans
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/regions-financial.png
 url: https://raw.githubusercontent.com/api-evangelist/regions-financial/refs/heads/main/apis.yml
 modified: '2026-05-19'
 description: >-
@@ -9,32 +23,76 @@ description: >-
   and third-party platforms. Regions joined FDX in 2021 and is targeting compliance with CFPB open banking rules by
   April 2027.
 apis:
-  - aid: regions-financial:regions-open-banking-api
-    name: Regions Open Banking API
-    description: >-
-      Regions Bank's FDX-compliant open banking API built on Axway Amplify Open Banking, providing consent-based access
-      to account information, transaction history, customer data, payment initiation, and consent management for
-      consumer banking, corporate banking, and wealth management customers. Uses OAuth 2.0 authorization with customer
-      consent flows replacing legacy screen-scraping.
-    humanURL: >-
+- aid: regions-financial:regions-financial-account-information-api
+  name: regions-financial Account Information API
+  description: Consumer and business account balances and details
+  humanURL: >-
+    https://ir.regions.com/news-events/press-releases/news-details/2025/Enhancing-Customer-Control-of-Financial-Data-Regions-Bank-Selects-Axway-to-Accelerate-Open-Banking-Services/default.aspx
+  baseURL: https://api.regions.com/v1
+  tags:
+  - Account Information
+  properties:
+  - type: OpenAPI
+    url: openapi/regions-financial-account-information-api-openapi.yml
+  - type: PressRelease
+    url: >-
       https://ir.regions.com/news-events/press-releases/news-details/2025/Enhancing-Customer-Control-of-Financial-Data-Regions-Bank-Selects-Axway-to-Accelerate-Open-Banking-Services/default.aspx
-    baseURL: https://api.regions.com/v1
-    tags:
-      - Open Banking
-      - Financial Data
-      - FDX
-      - Consumer Banking
-      - Wealth Management
-      - Account Data
-      - Transactions
-      - Payments
-    properties:
-      - type: OpenAPI
-        url: >-
-          https://raw.githubusercontent.com/api-evangelist/regions-financial/refs/heads/main/openapi/regions-open-banking-openapi.yml
-      - type: PressRelease
-        url: >-
-          https://ir.regions.com/news-events/press-releases/news-details/2025/Enhancing-Customer-Control-of-Financial-Data-Regions-Bank-Selects-Axway-to-Accelerate-Open-Banking-Services/default.aspx
+- aid: regions-financial:regions-financial-consent-api
+  name: regions-financial Consent API
+  description: Customer consent management for data sharing
+  humanURL: >-
+    https://ir.regions.com/news-events/press-releases/news-details/2025/Enhancing-Customer-Control-of-Financial-Data-Regions-Bank-Selects-Axway-to-Accelerate-Open-Banking-Services/default.aspx
+  baseURL: https://api.regions.com/v1
+  tags:
+  - Consent
+  properties:
+  - type: OpenAPI
+    url: openapi/regions-financial-consent-api-openapi.yml
+  - type: PressRelease
+    url: >-
+      https://ir.regions.com/news-events/press-releases/news-details/2025/Enhancing-Customer-Control-of-Financial-Data-Regions-Bank-Selects-Axway-to-Accelerate-Open-Banking-Services/default.aspx
+- aid: regions-financial:regions-financial-customer-api
+  name: regions-financial Customer API
+  description: Customer profile and identity
+  humanURL: >-
+    https://ir.regions.com/news-events/press-releases/news-details/2025/Enhancing-Customer-Control-of-Financial-Data-Regions-Bank-Selects-Axway-to-Accelerate-Open-Banking-Services/default.aspx
+  baseURL: https://api.regions.com/v1
+  tags:
+  - Customer
+  properties:
+  - type: OpenAPI
+    url: openapi/regions-financial-customer-api-openapi.yml
+  - type: PressRelease
+    url: >-
+      https://ir.regions.com/news-events/press-releases/news-details/2025/Enhancing-Customer-Control-of-Financial-Data-Regions-Bank-Selects-Axway-to-Accelerate-Open-Banking-Services/default.aspx
+- aid: regions-financial:regions-financial-payments-api
+  name: regions-financial Payments API
+  description: Payment initiation and status
+  humanURL: >-
+    https://ir.regions.com/news-events/press-releases/news-details/2025/Enhancing-Customer-Control-of-Financial-Data-Regions-Bank-Selects-Axway-to-Accelerate-Open-Banking-Services/default.aspx
+  baseURL: https://api.regions.com/v1
+  tags:
+  - Payments
+  properties:
+  - type: OpenAPI
+    url: openapi/regions-financial-payments-api-openapi.yml
+  - type: PressRelease
+    url: >-
+      https://ir.regions.com/news-events/press-releases/news-details/2025/Enhancing-Customer-Control-of-Financial-Data-Regions-Bank-Selects-Axway-to-Accelerate-Open-Banking-Services/default.aspx
+- aid: regions-financial:regions-financial-transactions-api
+  name: regions-financial Transactions API
+  description: Account transaction history
+  humanURL: >-
+    https://ir.regions.com/news-events/press-releases/news-details/2025/Enhancing-Customer-Control-of-Financial-Data-Regions-Bank-Selects-Axway-to-Accelerate-Open-Banking-Services/default.aspx
+  baseURL: https://api.regions.com/v1
+  tags:
+  - Transactions
+  properties:
+  - type: OpenAPI
+    url: openapi/regions-financial-transactions-api-openapi.yml
+  - type: PressRelease
+    url: >-
+      https://ir.regions.com/news-events/press-releases/news-details/2025/Enhancing-Customer-Control-of-Financial-Data-Regions-Bank-Selects-Axway-to-Accelerate-Open-Banking-Services/default.aspx
 common:
   - type: AgenticAccess
     url: agentic-access/regions-financial-agentic-access.yml
