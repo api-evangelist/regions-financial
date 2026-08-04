@@ -1,0 +1,22 @@
+{
+  "provider": "regions-financial",
+  "sources": [
+    "regions-financial-account-information-api-openapi.yml",
+    "regions-financial-consent-api-openapi.yml",
+    "regions-financial-customer-api-openapi.yml",
+    "regions-financial-payments-api-openapi.yml",
+    "regions-financial-transactions-api-openapi.yml"
+  ],
+  "outputs": [
+    "regions-financial-account-information-api-openapi.yml",
+    "regions-financial-consent-api-openapi.yml",
+    "regions-financial-customer-api-openapi.yml",
+    "regions-financial-payments-api-openapi.yml",
+    "regions-financial-transactions-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
