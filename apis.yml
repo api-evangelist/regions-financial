@@ -70,6 +70,8 @@ apis:
     https://ir.regions.com/news-events/press-releases/news-details/2025/Enhancing-Customer-Control-of-Financial-Data-Regions-Bank-Selects-Axway-to-Accelerate-Open-Banking-Services/default.aspx
   baseURL: https://api.regions.com/v1
   tags:
+  - Customers
+  tags_raw:
   - Customer
   properties:
   - type: OpenAPI
@@ -98,6 +100,8 @@ apis:
     https://ir.regions.com/news-events/press-releases/news-details/2025/Enhancing-Customer-Control-of-Financial-Data-Regions-Bank-Selects-Axway-to-Accelerate-Open-Banking-Services/default.aspx
   baseURL: https://api.regions.com/v1
   tags:
+  - Transaction
+  tags_raw:
   - Transactions
   properties:
   - type: OpenAPI
@@ -129,6 +133,14 @@ common:
     url: >-
       https://raw.githubusercontent.com/api-evangelist/regions-financial/refs/heads/main/vocabulary/regions-financial-vocabulary.yml
 tags:
+  - Banking
+  - Financial-Services
+  - Open Banking
+  - FDX
+  - Consumer Banking
+  - Wealth Management
+  - Fortune 500
+tags_raw:
   - Banking
   - Financial Services
   - Open Banking
