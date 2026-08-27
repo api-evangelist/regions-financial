@@ -1,4 +1,5 @@
 aid: regions-financial
+name: "Regions Financial Corporation"
 specificationVersion: '0.23'
 deliveryModel:
   model: unknown
