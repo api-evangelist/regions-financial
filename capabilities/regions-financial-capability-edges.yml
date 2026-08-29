@@ -1,0 +1,33 @@
+slug: regions-financial
+provider: Regions Financial Corporation
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Banking & Capital Markets
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 2
+edges:
+- tag: Payments
+  spec_file: regions-financial-payments-api-openapi.yml
+  capability_id: BC-1340.10
+  capability_id_l1: BC-1340
+  capability_name: Payment Initiation Management
+  confidence: 0.85
+  evidence: POST /payments  initiatePayment  Initiate Payment; schemas PaymentRequest, Payment
+  reason: FDX open-banking API that captures and initiates a payment instruction on behalf of a bank customer
+    — payment initiation within Payments & Card Management.
+- tag: Customer
+  spec_file: regions-financial-customer-api-openapi.yml
+  capability_id: BC-1300.40
+  capability_id_l1: BC-1300
+  capability_name: Customer Information Management
+  confidence: 0.7
+  evidence: GET /customers/current getCurrentCustomer Get Current Customer; schemas Name, Address, Customer
+  reason: Returns the banking customer's identifying profile data (name, address) for the authorised open
+    banking session — customer information/master data for a bank.

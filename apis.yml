@@ -111,6 +111,9 @@ apis:
     url: >-
       https://ir.regions.com/news-events/press-releases/news-details/2025/Enhancing-Customer-Control-of-Financial-Data-Regions-Bank-Selects-Axway-to-Accelerate-Open-Banking-Services/default.aspx
 common:
+  - type: CapabilityMap
+    url: capabilities/regions-financial-capability-edges.yml
+    name: Regions Financial Corporation Business Capability Map
   - type: AgenticAccess
     url: agentic-access/regions-financial-agentic-access.yml
   - type: DomainSecurity
