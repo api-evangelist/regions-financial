@@ -1,7 +1,9 @@
 ---
 title: Regions Says AI Lifts Productivity 20% as Loan Growth Cools
 url: https://www.pymnts.com/earnings/2026/regions-says-ai-lifts-productivity-20percent-loan-growth-cools/
-date: '2026-05-25'
+published: ''
+date_basis: harvested
+harvested: '2026-05-25'
 query: '"Regions Financial" press release artificial intelligence'
 position: 4
 source: serpapi-google

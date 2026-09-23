@@ -1,7 +1,9 @@
 ---
 title: Regions AI tool helps steer cross-selling
 url: https://www.americanbanker.com/news/regions-ai-tool-helps-steer-cross-selling
-date: '2026-05-25'
+published: ''
+date_basis: harvested
+harvested: '2026-05-25'
 query: '"Regions Financial" press release artificial intelligence'
 position: 5
 source: serpapi-google

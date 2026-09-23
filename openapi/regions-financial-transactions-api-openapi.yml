@@ -1,6 +1,6 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Regions Open Banking Account Information Transactions API
+  title: Regions Open Banking Transactions API
   description: Regions Bank is implementing FDX-compliant open banking APIs through its partnership with Axway Amplify Open Banking. These APIs enable secure, consent-based financial data sharing for consumer banking, corporate banking, and wealth management, replacing legacy screen-scraping with standardized API access. Built to Financial Data Exchange (FDX) API v6.x standards. Regions joined FDX in 2021 and is targeting full compliance with CFPB open banking rules by April 2027.
   version: 1.0.0
   contact:
@@ -87,14 +87,6 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-  parameters:
-    AccountId:
-      name: accountId
-      in: path
-      required: true
-      schema:
-        type: string
-      description: Unique account identifier
   schemas:
     Transaction:
       type: object
@@ -142,17 +134,6 @@ components:
         merchantCategory:
           type: string
           description: Merchant category code (MCC)
-    PageInfo:
-      type: object
-      properties:
-        total:
-          type: integer
-        limit:
-          type: integer
-        offset:
-          type: integer
-        hasMore:
-          type: boolean
     Error:
       type: object
       properties:
@@ -164,6 +145,25 @@ components:
           type: string
         traceId:
           type: string
+    PageInfo:
+      type: object
+      properties:
+        total:
+          type: integer
+        limit:
+          type: integer
+        offset:
+          type: integer
+        hasMore:
+          type: boolean
+  parameters:
+    AccountId:
+      name: accountId
+      in: path
+      required: true
+      schema:
+        type: string
+      description: Unique account identifier
   securitySchemes:
     OAuth2:
       type: oauth2

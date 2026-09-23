@@ -1,7 +1,9 @@
 ---
 title: 'Generative Artificial Intelligence: The Next Disruptive ...'
 url: https://www.regions.com/-/media/pdfs/wealth-management/Generative-Artificial-Intelligence-6923V5.pdf?revision=3dff6e95-3e98-4aeb-b8be-0e7c3d4790d5
-date: '2026-05-25'
+published: ''
+date_basis: harvested
+harvested: '2026-05-25'
 query: '"Regions Financial" press release artificial intelligence'
 position: 2
 source: serpapi-google

@@ -1,6 +1,6 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Regions Open Banking Account Information Customer API
+  title: Regions Open Banking Customer API
   description: Regions Bank is implementing FDX-compliant open banking APIs through its partnership with Axway Amplify Open Banking. These APIs enable secure, consent-based financial data sharing for consumer banking, corporate banking, and wealth management, replacing legacy screen-scraping with standardized API access. Built to Financial Data Exchange (FDX) API v6.x standards. Regions joined FDX in 2021 and is targeting full compliance with CFPB open banking rules by April 2027.
   version: 1.0.0
   contact:
@@ -36,6 +36,13 @@ paths:
         '401':
           $ref: '#/components/responses/Unauthorized'
 components:
+  responses:
+    Unauthorized:
+      description: Missing or invalid OAuth2 token
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   schemas:
     Address:
       type: object
@@ -53,25 +60,6 @@ components:
         country:
           type: string
           default: US
-    Customer:
-      type: object
-      properties:
-        customerId:
-          type: string
-          description: Unique customer identifier
-        name:
-          $ref: '#/components/schemas/Name'
-        email:
-          type: string
-          format: email
-        phone:
-          type: string
-        address:
-          $ref: '#/components/schemas/Address'
-        dateOfBirth:
-          type: string
-          format: date
-          description: Customer date of birth (masked for privacy)
     Name:
       type: object
       properties:
@@ -96,13 +84,25 @@ components:
           type: string
         traceId:
           type: string
-  responses:
-    Unauthorized:
-      description: Missing or invalid OAuth2 token
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
+    Customer:
+      type: object
+      properties:
+        customerId:
+          type: string
+          description: Unique customer identifier
+        name:
+          $ref: '#/components/schemas/Name'
+        email:
+          type: string
+          format: email
+        phone:
+          type: string
+        address:
+          $ref: '#/components/schemas/Address'
+        dateOfBirth:
+          type: string
+          format: date
+          description: Customer date of birth (masked for privacy)
   securitySchemes:
     OAuth2:
       type: oauth2

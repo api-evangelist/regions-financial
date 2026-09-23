@@ -1,7 +1,9 @@
 ---
 title: Regions Bank and CRE FinTech Blooma Collaborate to ...
 url: https://ir.regions.com/news-events/press-releases/news-details/2023/Regions-Bank-and-CRE-FinTech-Blooma-Collaborate-to-Modernize-Lending-Workflow-02-15-2023/default.aspx
-date: '2026-05-25'
+published: ''
+date_basis: harvested
+harvested: '2026-05-25'
 query: '"Regions Financial" press release artificial intelligence'
 position: 1
 source: serpapi-google

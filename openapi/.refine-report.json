@@ -1,11 +1,7 @@
 {
   "provider": "regions-financial",
   "sources": [
-    "regions-financial-account-information-api-openapi.yml",
-    "regions-financial-consent-api-openapi.yml",
-    "regions-financial-customer-api-openapi.yml",
-    "regions-financial-payments-api-openapi.yml",
-    "regions-financial-transactions-api-openapi.yml"
+    "_original/regions-open-banking-openapi.yml"
   ],
   "outputs": [
     "regions-financial-account-information-api-openapi.yml",
@@ -17,6 +13,16 @@
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "regions-open-banking-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "regions-financial-account-information-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "regions-financial-consent-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "regions-financial-customer-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "regions-financial-payments-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "regions-financial-transactions-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }
