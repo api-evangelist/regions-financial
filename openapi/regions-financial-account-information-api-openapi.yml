@@ -89,12 +89,6 @@ paths:
           $ref: '#/components/responses/Unauthorized'
 components:
   responses:
-    Unauthorized:
-      description: Missing or invalid OAuth2 token
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
     Forbidden:
       description: Insufficient scope or consent not granted
       content:
@@ -107,7 +101,35 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Missing or invalid OAuth2 token
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   schemas:
+    Balance:
+      type: object
+      properties:
+        available:
+          type: number
+          format: float
+          description: Available balance
+        current:
+          type: number
+          format: float
+          description: Current ledger balance
+        limit:
+          type: number
+          format: float
+          description: Credit limit (for credit accounts)
+        currency:
+          type: string
+          default: USD
+        asOf:
+          type: string
+          format: date-time
+          description: Balance as-of timestamp
     Account:
       type: object
       properties:
@@ -153,28 +175,6 @@ components:
           type: string
         traceId:
           type: string
-    Balance:
-      type: object
-      properties:
-        available:
-          type: number
-          format: float
-          description: Available balance
-        current:
-          type: number
-          format: float
-          description: Current ledger balance
-        limit:
-          type: number
-          format: float
-          description: Credit limit (for credit accounts)
-        currency:
-          type: string
-          default: USD
-        asOf:
-          type: string
-          format: date-time
-          description: Balance as-of timestamp
     PageInfo:
       type: object
       properties:
