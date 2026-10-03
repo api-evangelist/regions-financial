@@ -74,7 +74,71 @@ paths:
         '401':
           $ref: '#/components/responses/Unauthorized'
 components:
+  responses:
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Missing or invalid OAuth2 token
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: Invalid request parameters
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   schemas:
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+        details:
+          type: string
+        traceId:
+          type: string
+    PaymentRequest:
+      type: object
+      required:
+      - sourceAccountId
+      - amount
+      - currency
+      - paymentType
+      properties:
+        sourceAccountId:
+          type: string
+          description: Account to debit
+        destinationAccountId:
+          type: string
+          description: Internal destination account ID (for internal transfers)
+        amount:
+          type: number
+          format: float
+          minimum: 0.01
+        currency:
+          type: string
+          default: USD
+        paymentType:
+          type: string
+          enum:
+          - INTERNAL_TRANSFER
+          - ACH
+          - WIRE
+        memo:
+          type: string
+          description: Payment memo or description
+        scheduledDate:
+          type: string
+          format: date
+          description: Date to schedule payment (defaults to today)
     Payment:
       type: object
       properties:
@@ -110,70 +174,6 @@ components:
         createdAt:
           type: string
           format: date-time
-    PaymentRequest:
-      type: object
-      required:
-      - sourceAccountId
-      - amount
-      - currency
-      - paymentType
-      properties:
-        sourceAccountId:
-          type: string
-          description: Account to debit
-        destinationAccountId:
-          type: string
-          description: Internal destination account ID (for internal transfers)
-        amount:
-          type: number
-          format: float
-          minimum: 0.01
-        currency:
-          type: string
-          default: USD
-        paymentType:
-          type: string
-          enum:
-          - INTERNAL_TRANSFER
-          - ACH
-          - WIRE
-        memo:
-          type: string
-          description: Payment memo or description
-        scheduledDate:
-          type: string
-          format: date
-          description: Date to schedule payment (defaults to today)
-    Error:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-        details:
-          type: string
-        traceId:
-          type: string
-  responses:
-    NotFound:
-      description: Resource not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    BadRequest:
-      description: Invalid request parameters
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Missing or invalid OAuth2 token
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   securitySchemes:
     OAuth2:
       type: oauth2
