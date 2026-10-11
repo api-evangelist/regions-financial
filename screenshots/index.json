@@ -1,0 +1,11 @@
+[
+  {
+    "repo": "regions-financial",
+    "captured_at": "2026-10-11T192417",
+    "source_url": "https://www.regions.com",
+    "source_type": "Website",
+    "file": "regions-financial-2026-10-11T192417.png",
+    "bytes": 537961,
+    "capture": "playwright-local"
+  }
+]
