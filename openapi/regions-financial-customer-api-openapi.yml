@@ -37,18 +37,16 @@ paths:
           $ref: '#/components/responses/Unauthorized'
 components:
   schemas:
-    Name:
+    Error:
       type: object
       properties:
-        first:
+        code:
           type: string
-        middle:
+        message:
           type: string
-        last:
+        details:
           type: string
-        prefix:
-          type: string
-        suffix:
+        traceId:
           type: string
     Customer:
       type: object
@@ -69,17 +67,6 @@ components:
           type: string
           format: date
           description: Customer date of birth (masked for privacy)
-    Error:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-        details:
-          type: string
-        traceId:
-          type: string
     Address:
       type: object
       properties:
@@ -96,6 +83,19 @@ components:
         country:
           type: string
           default: US
+    Name:
+      type: object
+      properties:
+        first:
+          type: string
+        middle:
+          type: string
+        last:
+          type: string
+        prefix:
+          type: string
+        suffix:
+          type: string
   responses:
     Unauthorized:
       description: Missing or invalid OAuth2 token

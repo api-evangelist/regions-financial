@@ -74,26 +74,7 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
-  parameters:
-    AccountId:
-      name: accountId
-      in: path
-      required: true
-      schema:
-        type: string
-      description: Unique account identifier
   schemas:
-    PageInfo:
-      type: object
-      properties:
-        total:
-          type: integer
-        limit:
-          type: integer
-        offset:
-          type: integer
-        hasMore:
-          type: boolean
     Error:
       type: object
       properties:
@@ -105,6 +86,17 @@ components:
           type: string
         traceId:
           type: string
+    PageInfo:
+      type: object
+      properties:
+        total:
+          type: integer
+        limit:
+          type: integer
+        offset:
+          type: integer
+        hasMore:
+          type: boolean
     Transaction:
       type: object
       properties:
@@ -164,6 +156,14 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
+  parameters:
+    AccountId:
+      name: accountId
+      in: path
+      required: true
+      schema:
+        type: string
+      description: Unique account identifier
   securitySchemes:
     OAuth2:
       type: oauth2
